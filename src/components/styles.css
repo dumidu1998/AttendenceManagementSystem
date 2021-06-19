@@ -10,7 +10,8 @@
 
 
 .cardclass{
-    display: none;
+    /* display: none; */
+    display: block;
     width: 60%;
     min-width: 60%;
     height: 280px;

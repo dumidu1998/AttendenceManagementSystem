@@ -1,62 +1,117 @@
-import React, { Component } from 'react'
-import { NavLink } from 'react-router-dom'
-import M from 'materialize-css';
+import React from "react";
+import { makeStyles } from "@material-ui/core/styles";
+import Drawer from "@material-ui/core/Drawer";
+import CssBaseline from "@material-ui/core/CssBaseline";
+import AppBar from "@material-ui/core/AppBar";
+import Toolbar from "@material-ui/core/Toolbar";
+import List from "@material-ui/core/List";
+import Typography from "@material-ui/core/Typography";
+import Divider from "@material-ui/core/Divider";
+import ListItem from "@material-ui/core/ListItem";
+import ListItemIcon from "@material-ui/core/ListItemIcon";
+import ListItemText from "@material-ui/core/ListItemText";
+import DashboardIcon from "@material-ui/icons/Dashboard";
+import PersonAddIcon from "@material-ui/icons/PersonAdd";
+import CheckIcon from "@material-ui/icons/Check";
+import PersonIcon from "@material-ui/icons/Person";
+import SettingsIcon from "@material-ui/icons/Settings";
+import { NavLink } from "react-router-dom";
 
-class Navbar extends Component {
-    constructor(props){
-        super(props);
-        this.signOut=this.signOut.bind(this);
-    }
+const drawerWidth = 240;
 
-    componentDidMount(){
-        const sidenav = document.querySelectorAll('.sidenav');
-        M.Sidenav.init(sidenav,{});
+const useStyles = makeStyles((theme) => ({
+    root: {
+        display: "flex"
+    },
+    links: {
+        textDecoration: 'none',
+        color: 'black'
+    },
+    appBar: {
+        width: `calc(100% - ${drawerWidth}px)`,
+        marginLeft: drawerWidth
+    },
+    drawer: {
+        width: drawerWidth,
+        flexShrink: 0
+    },
+    drawerPaper: {
+        width: drawerWidth
+    },
+    // necessary for content to be below app bar
+    toolbar: theme.mixins.toolbar,
+    content: {
+        flexGrow: 1,
+        backgroundColor: theme.palette.background.default,
+        padding: theme.spacing(3)
     }
+}));
 
-    signOut(){
-        localStorage.removeItem("token");
-        localStorage.removeItem("email");
-        localStorage.removeItem("name");
-        console.log(localStorage);
-    }
 
-    render() {
-        return(
-            <div class="navigation-bar">
-                        <nav>
-                            <div class="nav-wrapper white">
-                                <a href="#" class="brand-logo black-text right">Banger & Co</a>
-                                <a href="sidenav" class="sidenav-trigger" data-target="slide-out"><i class="black-text material-icons">menu</i></a>
-                            </div>
-                        </nav>
-                <ul class="sidenav sidenav-fixed bg" id="slide-out">
-                    <li>
-                        <div class="user-view">
-                            <img src="https://f0.pngfuel.com/png/782/114/profile-icon-png-clip-art.png" alt="admin-pic" class="circle"/>
-                            <h4 class="white-text name">Administrator</h4>
-                        </div>
-                    </li>
-                    <li>
-                        <NavLink class="white-text" to='/dashboard'><i class="material-icons left white-text">home</i>Dashboard</NavLink>
-                    </li>
-                    <li>
-                        <NavLink class="white-text" to='/users'><i class="material-icons left white-text">account_circle</i>Users</NavLink>
-                    </li>
-                    <li>
-                        <NavLink class="white-text" to='/vehicles'><i class="material-icons left white-text">time_to_leave</i>Vehicles</NavLink>
-                    </li>
-                    <li>
-                        <NavLink class="white-text" to='/utilities'><i class="material-icons left white-text">widgets</i>Utilities</NavLink>
-                    </li>
-                    <li>
-                        <NavLink class="white-text" to='/competitorInfo'><i class="material-icons left white-text">compare_arrows</i>Price Comparison</NavLink>
-                    </li>
-                    <li><a href="/" onClick={this.signOut} class="white-text">Logout</a></li>
-                </ul>
-            </div>
-        )
-    }
-    
+function Navbar() {
+
+    const classes = useStyles();
+    return (
+        <div className={classes.root}>
+            <CssBaseline />
+            <Drawer
+                className={classes.drawer}
+                variant="permanent"
+                classes={{
+                    paper: classes.drawerPaper
+                }}
+                anchor="left"
+            >
+                <div className={classes.toolbar} />
+                <h4><img src="https://www.searchpng.com/wp-content/uploads/2019/02/Men-Profile-Image.png" alt="admin-pic" width='80' />
+                </h4>
+                <h3>Dumidu Kasun</h3>
+                <Divider />
+                <List>
+                    <NavLink className={classes.links} to='/dashboard'>
+                        <ListItem button key="Dashboard">
+                            <ListItemIcon>
+                                <DashboardIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Dashboard" />
+                        </ListItem>
+                    </NavLink>
+                    <NavLink className={classes.links} to='/manualmarking'>
+                        <ListItem button key="Marking (Manual)" >
+                            <ListItemIcon>
+                                <CheckIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Marking (Manual)" />
+                        </ListItem>
+                    </NavLink>
+                    <NavLink className={classes.links} to='/adminhome'>
+                        <ListItem button key="Admin List">
+                            <ListItemIcon>
+                                <PersonIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Admin List" />
+                        </ListItem>
+                    </NavLink>
+                    <NavLink className={classes.links} to='/studenthome'>
+                        <ListItem button key="Students">
+                            <ListItemIcon>
+                                <PersonAddIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Students" />
+                        </ListItem>
+                    </NavLink>
+                    <NavLink className={classes.links} to='/settings'>
+                        <ListItem button key="Settings">
+                            <ListItemIcon>
+                                <SettingsIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Settings" />
+                        </ListItem>
+                    </NavLink>
+                </List>
+            </Drawer>
+        </div>
+    )
 }
 
-export default Navbar;
+export default Navbar

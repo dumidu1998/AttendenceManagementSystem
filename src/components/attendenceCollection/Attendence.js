@@ -19,7 +19,7 @@ function Attendence() {
         i = setInterval(() => {
             setProgress((prevProgress) => (prevProgress <= 10 ? 0 : prevProgress - 10));
 
-        }, 200) //200
+        }, 300) //200
         if (progress == 0) {
             clearInterval(i);
         }
@@ -59,8 +59,11 @@ function Attendence() {
                         </Typography>
                         <Typography variant="h6" component="h2">
                             <img src="https://lh3.googleusercontent.com/proxy/1HwpcK-hCtfysHmgpDEwBjJ4ebHvGW-Qh3bUGDbfB70I0eLw265HAB8op-nYrwzm0kRgihjoLpv2KMUPAHHOWw_tusCbSQE"
-                                width="130" />
+                                width="100" />
                         </Typography>
+                        <Button type="submit" variant="outlined" color="primary">
+                            Request Attendence Report
+                        </Button>
                     </CardContent>
                 </Card>
                 <Box width="100%" mr={1} className="pbar">

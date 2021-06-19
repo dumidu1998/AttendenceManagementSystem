@@ -79,7 +79,6 @@ class Dashboard extends Component {
                 <NavBar />
                 <div class="content">
                     <div class="container">
-
                         <div class="row">
                         </div>
                         <div class="col s12 l12 m6">
