@@ -1,0 +1,15 @@
+.mainform{
+    float: right;
+    margin: 0px;
+    display: flex;
+}
+
+.mainform Button{
+    display: block;
+}
+
+
+.cardclass{
+    width: 40%;
+    min-width: 40%;
+}
