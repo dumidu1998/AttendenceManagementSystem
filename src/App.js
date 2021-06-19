@@ -1,9 +1,10 @@
 import './App.css';
 import React, { Component } from 'react';
 import Attendence from './components/attendenceCollection/Attendence';
-import Dashboard from './components/dashboard/Dashboard';
+import Dashboard from './components/maindashboard/Dashboard';
 import Navbar from './components/layout/Navbar';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import ManualAttendence from './components/manualAttendence/ManualAttendence';
 function App() {
   return (
     // <div className="App">
@@ -12,11 +13,14 @@ function App() {
     <BrowserRouter>
       <div className="App">
         <Switch>
-          <Navbar />
-          {/* <Dashboard /> */}
+          <Route exact path='/' component={Attendence} />
           <Route exact path='/dashboard' component={Dashboard} />
+          <Route exact path='/manualmarking' component={ManualAttendence} />
+          <Route exact path='/adminhome' component={ManualAttendence} />
+          <Route exact path='/studenthome' component={ManualAttendence} />
+          <Route exact path='/staffhome' component={ManualAttendence} />
+          <Route exact path='/settings' component={ManualAttendence} />
           {/* <Route exact path='/' component={SignIn} />
-          <Route exact path='/signin' component={SignIn} />
           <Route exact path='/users' component={UserList} />
           <Route exact path='/vehicles' component={VehicleList} />
           <Route exact path='/utilities' component={UtilityList} />

@@ -100,6 +100,14 @@ function Navbar() {
                             <ListItemText primary="Students" />
                         </ListItem>
                     </NavLink>
+                    <NavLink className={classes.links} to='/staffhome'>
+                        <ListItem button key="staff">
+                            <ListItemIcon>
+                                <PersonAddIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="staff" />
+                        </ListItem>
+                    </NavLink>
                     <NavLink className={classes.links} to='/settings'>
                         <ListItem button key="Settings">
                             <ListItemIcon>

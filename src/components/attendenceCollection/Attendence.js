@@ -2,6 +2,7 @@ import React, { useState } from 'react'
 import TextField from '@material-ui/core/TextField';
 import { Button, CardContent, Typography, Card, Box, LinearProgress } from '@material-ui/core';
 import '../styles.css';
+import Navbar from '../layout/Navbar';
 
 function Attendence() {
 
@@ -19,7 +20,7 @@ function Attendence() {
         i = setInterval(() => {
             setProgress((prevProgress) => (prevProgress <= 10 ? 0 : prevProgress - 10));
 
-        }, 300) //200
+        }, 200) //200
         if (progress == 0) {
             clearInterval(i);
         }
@@ -36,7 +37,7 @@ function Attendence() {
             <div class="">
                 <form autoComplete="off" onSubmit={submitfunction}>
                     <h4>Enter your ID number</h4>
-                    <TextField autoFocus id="outlined-basic" label="ID Number" required variant="outlined" value={Id}
+                    <TextField type="number" autoFocus id="outlined-basic" label="ID Number" required variant="outlined" value={Id}
                         onChange={(e) => setId(e.target.value)}
                     /><br /><br />
                     <Button type="submit" variant="outlined" color="primary">

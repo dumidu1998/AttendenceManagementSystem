@@ -8,10 +8,13 @@
     display: block;
 }
 
+.content{
+    margin-left: 150px;
+}
 
 .cardclass{
-    /* display: none; */
-    display: block;
+    display: none;
+    /* display: block; */
     width: 60%;
     min-width: 60%;
     height: 280px;
