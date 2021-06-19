@@ -9,7 +9,7 @@ import { makeStyles } from "@material-ui/core/styles";
 const styles = makeStyles((muiBaseTheme) => ({
     card: {
         maxWidth: 300,
-        width: 250,
+        width: 230,
         margin: "auto",
         marginLeft: '130',
         transition: "0.3s",
