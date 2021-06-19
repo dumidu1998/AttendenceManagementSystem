@@ -1,38 +1,52 @@
-import React from 'react'
+import React, { useState } from 'react'
 import TextField from '@material-ui/core/TextField';
 import { Button, CardContent, Typography, Card, Box, LinearProgress } from '@material-ui/core';
 import '../styles.css';
 
 function Attendence() {
 
-    const [progress, setProgress] = React.useState(100);
+    const [progress, setProgress] = useState(100);
+    const [Id, setId] = useState('');
+
     const submitfunction = (e) => {
         e.preventDefault();
-        alert("aaa");
-        setInterval(() => {
-            setProgress((prevProgress) => (prevProgress >= 100 ? 10 : prevProgress - 10));
-        }, 800);
-        if (progress === 0) {
-            alert("d0ne");
+        document.getElementById('mcard').style.display = "block";
+        probar();
+        //logic 
+    }
+    var i;
+    const probar = () => {
+        i = setInterval(() => {
+            setProgress((prevProgress) => (prevProgress <= 10 ? 0 : prevProgress - 10));
+
+        }, 200) //200
+        if (progress == 0) {
+            clearInterval(i);
         }
+    }
+
+    if (progress === 10) {
+        window.location.reload();
     }
 
     return (
         <div>
-            <img src="https://www.felca.org/wp-content/uploads/Logo-edex-pdf.jpg" width="150" />
+            <img src="https://www.felca.org/wp-content/uploads/Logo-edex-pdf.jpg" width="130" />
             <h1>Welcome to Edex Institute</h1>
-            <div class="mainform">
+            <div class="">
                 <form autoComplete="off" onSubmit={submitfunction}>
                     <h4>Enter your ID number</h4>
-                    <TextField autoFocus id="outlined-basic" label="ID Number" variant="outlined" /><br /><br />
+                    <TextField autoFocus id="outlined-basic" label="ID Number" required variant="outlined" value={Id}
+                        onChange={(e) => setId(e.target.value)}
+                    /><br /><br />
                     <Button type="submit" variant="outlined" color="primary">
                         Submit
                     </Button>
                 </form>
             </div>
-            <div>
+            <div >
                 <br />
-                <Card className="cardclass" variant="outlined">
+                <Card className="cardclass" variant="outlined" id="mcard">
                     <CardContent>
                         <Typography className="" variant="h4">
                             Dumidu Kasun Bandara Rajakaruna
@@ -44,16 +58,17 @@ function Attendence() {
                             Attendence Marked
                         </Typography>
                         <Typography variant="h6" component="h2">
-                            <img src="https://lh3.googleusercontent.com/proxy/1HwpcK-hCtfysHmgpDEwBjJ4ebHvGW-Qh3bUGDbfB70I0eLw265HAB8op-nYrwzm0kRgihjoLpv2KMUPAHHOWw_tusCbSQE" width="150" />
+                            <img src="https://lh3.googleusercontent.com/proxy/1HwpcK-hCtfysHmgpDEwBjJ4ebHvGW-Qh3bUGDbfB70I0eLw265HAB8op-nYrwzm0kRgihjoLpv2KMUPAHHOWw_tusCbSQE"
+                                width="130" />
                         </Typography>
                     </CardContent>
                 </Card>
-                <Box width="100%" mr={1}>
+                <Box width="100%" mr={1} className="pbar">
                     <LinearProgress variant="determinate" value={progress} />
                 </Box>
             </div>
 
-        </div>
+        </div >
     )
 }
 

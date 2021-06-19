@@ -10,6 +10,14 @@
 
 
 .cardclass{
-    width: 40%;
-    min-width: 40%;
+    display: none;
+    width: 60%;
+    min-width: 60%;
+    height: 280px;
+    margin: auto;
+}
+
+.pbar{
+    position: fixed;
+    bottom: 0;
 }
