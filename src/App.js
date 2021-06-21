@@ -2,6 +2,7 @@ import './App.css';
 import React, { Component } from 'react';
 import Attendence from './components/attendenceCollection/Attendence';
 import Dashboard from './components/maindashboard/Dashboard';
+import Admin from './components/admins/Admin';
 import Navbar from './components/layout/Navbar';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import ManualAttendence from './components/manualAttendence/ManualAttendence';
@@ -16,7 +17,7 @@ function App() {
           <Route exact path='/' component={Attendence} />
           <Route exact path='/dashboard' component={Dashboard} />
           <Route exact path='/manualmarking' component={ManualAttendence} />
-          <Route exact path='/adminhome' component={ManualAttendence} />
+          <Route exact path='/adminhome' component={Admin} />
           <Route exact path='/studenthome' component={ManualAttendence} />
           <Route exact path='/staffhome' component={ManualAttendence} />
           <Route exact path='/settings' component={ManualAttendence} />

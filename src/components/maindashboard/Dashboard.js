@@ -6,19 +6,19 @@ import { makeStyles } from '@material-ui/core/styles';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
-
-import '../styles.css'
+import InputLabel from '@material-ui/core/InputLabel';
 import { Button, FormGroup, FormLabel, OutlinedInput } from '@material-ui/core';
+import '../styles.css'
 
 const columns = [
-    { field: 'id', headerName: 'Reg. No', width: 150 },
+    { field: 'id', headerName: 'Reg. No', width: 250 },
     { field: 'firstName', headerName: 'Name', width: 200 },
-    { field: 'lastName', headerName: 'Last name', width: 200 },
+    { field: 'lastName', headerName: 'Batch', width: 200 },
     {
         field: 'age',
         headerName: 'Age',
         type: 'number',
-        width: 90,
+        width: 190,
     }
 ];
 
@@ -28,7 +28,7 @@ const rows = [
     { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
     { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
     { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: null, age: 150 },
+    { id: 6, lastName: 'Melisandre', firstName: 'dumidu', age: 150 },
     { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
     { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
     { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
@@ -50,8 +50,8 @@ const useStyles = makeStyles((theme) => ({
 
 export default function Dashboard() {
     const classes = useStyles();
-    const [openstaff, setOpenstaff] = React.useState(false);
     const [openstudent, setOpenstudent] = React.useState(false);
+    const [openstaff, setOpenstaff] = React.useState(false);
 
     const handleOpenstaff = () => {
         setOpenstaff(true);
@@ -80,8 +80,11 @@ export default function Dashboard() {
             <Button variant="contained" color="primary" onClick={handleOpenstaff} style={{ marginTop: '30px' }}>
                 Add Staff
             </Button>
-            <div style={{ height: 400, marginLeft: '110px', marginTop: '50px' }}>
-                <DataGrid rows={rows} columns={columns} pageSize={15} />
+            <br />
+            <br />
+            <h2>Today Attendence</h2>
+            <div style={{ height: 600, marginLeft: '110px', marginTop: '10px' }}>
+                <DataGrid rows={rows} columns={columns} pageSize={10} />
             </div>
 
 
@@ -109,9 +112,8 @@ export default function Dashboard() {
                                 <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
                                 <FormLabel>Registration Number</FormLabel>
                                 <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
-                                <FormLabel>Batch</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
-
+                                {/* <FormLabel>Batch</FormLabel>
+                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} /> */}
                                 <Button variant="contained" type='submit' disbled color="primary"
                                     style={{ marginTop: '30px' }}>
                                     Add Student
@@ -145,9 +147,10 @@ export default function Dashboard() {
                                 <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
                                 <FormLabel>Registration Number</FormLabel>
                                 <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
-                                <FormLabel>Batch</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
-
+                                {/* <FormLabel>Batch</FormLabel>
+                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} /> */}
+                                {/* <InputLabel htmlFor="age-native-simple">Batch</InputLabel>
+                                <BatchSelect value={1} /> */}
                                 <Button variant="contained" type='submit' disbled color="primary"
                                     style={{ marginTop: '30px' }}>
                                     Add Student

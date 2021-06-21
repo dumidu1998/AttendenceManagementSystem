@@ -65,7 +65,7 @@ function Navbar() {
                 <div className={classes.toolbar} />
                 <h4><img src="https://www.searchpng.com/wp-content/uploads/2019/02/Men-Profile-Image.png" alt="admin-pic" width='80' />
                 </h4>
-                <h3>Dumidu Kasun</h3>
+                <h3>Dilupa Bappa</h3>
                 <Divider />
                 <List>
                     <NavLink className={classes.links} to='/dashboard'>

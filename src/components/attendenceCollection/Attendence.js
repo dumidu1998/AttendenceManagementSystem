@@ -59,7 +59,7 @@ function Attendence() {
                             Attendence Marked
                         </Typography>
                         <Typography variant="h6" component="h2">
-                            <img src="https://lh3.googleusercontent.com/proxy/1HwpcK-hCtfysHmgpDEwBjJ4ebHvGW-Qh3bUGDbfB70I0eLw265HAB8op-nYrwzm0kRgihjoLpv2KMUPAHHOWw_tusCbSQE"
+                            <img src="https://www.jing.fm/clipimg/full/24-242581_checkmark-svg-clipart-green-tick-png.png"
                                 width="100" />
                         </Typography>
                         <Button type="submit" variant="outlined" color="primary">
