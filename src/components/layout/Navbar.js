@@ -65,7 +65,7 @@ function Navbar() {
                 <div className={classes.toolbar} />
                 <h4><img src="https://www.searchpng.com/wp-content/uploads/2019/02/Men-Profile-Image.png" alt="admin-pic" width='80' />
                 </h4>
-                <h3>Dilupa Bappa</h3>
+                <h3>Dilupa Bandara</h3>
                 <Divider />
                 <List>
                     <NavLink className={classes.links} to='/dashboard'>
@@ -101,19 +101,19 @@ function Navbar() {
                         </ListItem>
                     </NavLink>
                     <NavLink className={classes.links} to='/staffhome'>
-                        <ListItem button key="staff">
+                        <ListItem button key="Staff">
                             <ListItemIcon>
                                 <PersonAddIcon />
                             </ListItemIcon>
-                            <ListItemText primary="staff" />
+                            <ListItemText primary="Staff" />
                         </ListItem>
                     </NavLink>
                     <NavLink className={classes.links} to='/settings'>
-                        <ListItem button key="Settings">
+                        <ListItem button key="Profile Settings">
                             <ListItemIcon>
                                 <SettingsIcon />
                             </ListItemIcon>
-                            <ListItemText primary="Settings" />
+                            <ListItemText primary="Profile Settings" />
                         </ListItem>
                     </NavLink>
                 </List>

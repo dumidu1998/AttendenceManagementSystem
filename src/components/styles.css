@@ -25,3 +25,8 @@
     position: fixed;
     bottom: 0;
 }
+
+
+.adminbtn{
+    margin-left:-100px;
+}

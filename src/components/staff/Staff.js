@@ -1,11 +1,13 @@
 import React from 'react'
 import Navbar from '../layout/Navbar';
 import { DataGrid } from '@material-ui/data-grid';
-import { Button, FormGroup, FormLabel, OutlinedInput } from '@material-ui/core';
+import { Button, FormGroup, FormLabel, IconButton, InputBase, OutlinedInput, Paper } from '@material-ui/core';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { makeStyles } from '@material-ui/core/styles';
+import SearchIcon from "@material-ui/icons/Search";
+
 
 import '../styles.css'
 
@@ -46,6 +48,20 @@ const useStyles = makeStyles((theme) => ({
         boxShadow: theme.shadows[5],
         padding: theme.spacing(2, 4, 3),
     },
+    searchcontainer: {
+        padding: "2px 4px",
+        display: "flex",
+        alignItems: "center",
+        width: '50%',
+        margin: 'auto'
+    },
+    input: {
+        marginLeft: theme.spacing(1),
+        flex: 1
+    },
+    iconButton: {
+        padding: 10
+    },
 }));
 
 export default function Admin() {
@@ -64,11 +80,21 @@ export default function Admin() {
 
     return (
         <div className="content">
-            <h1>Admin List</h1>
+            <h1>Staff</h1>
             <Navbar />
-            <Button className="adminbtn" variant="contained" color="primary" onClick={handleOpenstudent} style={{ marginLeft: '150px', display: 'block', marginTop: '30px' }}>
-                Add Admin
-            </Button>
+            <Paper component="form" className={classes.searchcontainer}>
+                <InputBase
+                    className={classes.input}
+                    placeholder="Search by Name, Registration No"
+                    inputProps={{ "aria-label": "search google maps" }}
+                />
+                <IconButton
+                    className={classes.iconButton}
+                    aria-label="search"
+                >
+                    <SearchIcon />
+                </IconButton>
+            </Paper>
             <div style={{ height: 600, marginLeft: '110px', marginTop: '10px' }}>
                 <DataGrid rows={rows} columns={columns} pageSize={10} />
             </div>
