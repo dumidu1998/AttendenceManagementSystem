@@ -14,6 +14,7 @@ import DashboardIcon from "@material-ui/icons/Dashboard";
 import PersonAddIcon from "@material-ui/icons/PersonAdd";
 import CheckIcon from "@material-ui/icons/Check";
 import PersonIcon from "@material-ui/icons/Person";
+import GroupWorkIcon from '@material-ui/icons/GroupWork';
 import SettingsIcon from "@material-ui/icons/Settings";
 import { NavLink } from "react-router-dom";
 
@@ -106,6 +107,14 @@ function Navbar() {
                                 <PersonAddIcon />
                             </ListItemIcon>
                             <ListItemText primary="Staff" />
+                        </ListItem>
+                    </NavLink>
+                    <NavLink className={classes.links} to='/batchhome'>
+                        <ListItem button key="Batch">
+                            <ListItemIcon>
+                                <GroupWorkIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Batch" />
                         </ListItem>
                     </NavLink>
                     <NavLink className={classes.links} to='/settings'>
