@@ -14,7 +14,6 @@
 
 .cardclass{
     display: none;
-    /* display: block; */
     width: 60%;
     min-width: 60%;
     height: 280px;
@@ -29,4 +28,8 @@
 
 .adminbtn{
     margin-left:-100px;
+}
+
+.topic{
+     text-align: left !important;
 }
