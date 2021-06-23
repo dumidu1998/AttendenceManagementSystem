@@ -8,22 +8,30 @@ import Fade from '@material-ui/core/Fade';
 import { makeStyles } from '@material-ui/core/styles';
 
 import '../styles.css'
+import Deletebtn from '../tableButtons/Deletebtn';
 
 
 const columns = [
-    { field: 'id', headerName: 'Admin Id', width: 250 },
-    { field: 'firstName', headerName: 'Name', width: 200 },
-    { field: 'lastName', headerName: 'Batch', width: 200 },
+    { field: 'id', headerName: 'Admin Username', width: 250 },
+    { field: 'firstName', headerName: 'Admin Email', width: 200 },
+    { field: 'lastName', headerName: 'Full Name', width: 200 },
+    // {
+    //     field: 'age',
+    //     headerName: 'Age',
+    //     type: 'number',
+    //     width: 190,
+    // },
     {
         field: 'age',
-        headerName: 'Age',
-        type: 'number',
+        headerName: 'Action',
         width: 190,
+        renderCell: Deletebtn,
+        disbleClickEventBubbling: true
     }
 ];
 
 const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
+    { id: 1, lastName: 'aaaa', firstName: 'Jon', age: 35 },
     { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
     { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
     { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
@@ -93,11 +101,11 @@ export default function Admin() {
                                 <FormLabel>Full Name</FormLabel>
                                 <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
                                 <FormLabel>Username</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
+                                <OutlinedInput type="email" required style={{ height: '30px', marginBottom: '10px' }} />
                                 <FormLabel>Email</FormLabel>
                                 <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
                                 <FormLabel>Password</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
+                                <OutlinedInput type="text" autocomplete="off" required style={{ height: '30px', marginBottom: '10px' }} />
                                 <Button variant="contained" type='submit' disbled color="primary"
                                     style={{ marginTop: '30px' }}>
                                     Add Student

@@ -88,15 +88,11 @@ export default function Admin() {
                 <Fade in={openstudent}>
                     <div className={classes.paper}>
                         <form onSubmit={() => alert('submitted')} autocomplete="off" >
-                            <h2 id="transition-modal-title">Add New Admin</h2>
+                            <h2 id="transition-modal-title">Add New Batch</h2>
                             <FormGroup>
-                                <FormLabel>Full Name</FormLabel>
+                                <FormLabel>Batch Name</FormLabel>
                                 <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
-                                <FormLabel>Username</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
-                                <FormLabel>Email</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
-                                <FormLabel>Password</FormLabel>
+                                <FormLabel>Batch code</FormLabel>
                                 <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
                                 <Button variant="contained" type='submit' disbled color="primary"
                                     style={{ marginTop: '30px' }}>

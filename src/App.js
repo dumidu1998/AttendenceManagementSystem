@@ -11,9 +11,6 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import ManualAttendence from './components/manualAttendence/ManualAttendence';
 function App() {
   return (
-    // <div className="App">
-    //   {/* <Attendence /> */}
-    // </div>
     <BrowserRouter>
       <div className="App">
         <Switch>
@@ -25,15 +22,6 @@ function App() {
           <Route exact path='/staffhome' component={Staff} />
           <Route exact path='/batchhome' component={Batch} />
           <Route exact path='/settings' component={Profile} />
-          {/* <Route exact path='/' component={SignIn} />
-          <Route exact path='/users' component={UserList} />
-          <Route exact path='/vehicles' component={VehicleList} />
-          <Route exact path='/utilities' component={UtilityList} />
-          <Route exact path='/updateVehicle' component={UpdateVehicle} />
-          <Route exact path='/updateBooking' component={UpdateBooking} />
-          <Route exact path='/updateUtility' component={UpdateUtility} />
-          <Route exact path='/userDocs' component={UserDocs} />
-          <Route exact path='/competitorInfo' component={CompetitorInfo} /> */}
         </Switch>
       </div>
     </BrowserRouter>

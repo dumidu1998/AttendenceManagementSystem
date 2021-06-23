@@ -18,6 +18,8 @@ export default function BatchSelect(props) {
                 <option value={20}>2017/18</option>
                 <option value={30}>2018/12</option>
             </Select>
+            <br />
+            <br />
         </div>
     )
 }

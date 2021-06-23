@@ -7,12 +7,14 @@ import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import InputLabel from '@material-ui/core/InputLabel';
+import BatchSelect from './BatchSelect';
 import { Button, FormGroup, FormLabel, OutlinedInput } from '@material-ui/core';
 import '../styles.css'
 
 const columns = [
     { field: 'id', headerName: 'Reg. No', width: 250 },
     { field: 'firstName', headerName: 'Name', width: 200 },
+    { field: 'lastName', headerName: 'Batch', width: 200 },
     { field: 'lastName', headerName: 'Batch', width: 200 },
     {
         field: 'age',
@@ -108,16 +110,26 @@ export default function Dashboard() {
                             <FormGroup>
                                 <FormLabel>RFID No.</FormLabel>
                                 <OutlinedInput autoFocus type="tel" required style={{ height: '30px', marginBottom: '10px' }} />
+                                <FormLabel>Student Reg. No</FormLabel>
+                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
                                 <FormLabel>Full Name</FormLabel>
                                 <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
-                                <FormLabel>Registration Number</FormLabel>
+                                <FormLabel>Batch</FormLabel>
+                                <BatchSelect value={10} />
+                                <FormLabel>DOB</FormLabel>
+                                <OutlinedInput type="date" required style={{ height: '30px', marginBottom: '10px' }} />
+                                <FormLabel>Address</FormLabel>
                                 <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
-                                {/* <FormLabel>Batch</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} /> */}
+                                <FormLabel>Email</FormLabel>
+                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
+                                <FormLabel>Contact No.</FormLabel>
+                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
+
                                 <Button variant="contained" type='submit' disbled color="primary"
                                     style={{ marginTop: '30px' }}>
                                     Add Student
                                 </Button>
+
                             </FormGroup>
                         </form>
                     </div>
@@ -143,18 +155,24 @@ export default function Dashboard() {
                             <FormGroup>
                                 <FormLabel>RFID No.</FormLabel>
                                 <OutlinedInput autoFocus type="tel" required style={{ height: '30px', marginBottom: '10px' }} />
+                                <FormLabel>Staff ID</FormLabel>
+                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
                                 <FormLabel>Full Name</FormLabel>
                                 <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
-                                <FormLabel>Registration Number</FormLabel>
+                                <FormLabel>DOB</FormLabel>
+                                <OutlinedInput type="date" required style={{ height: '30px', marginBottom: '10px' }} />
+                                <FormLabel>Address</FormLabel>
                                 <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
-                                {/* <FormLabel>Batch</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} /> */}
-                                {/* <InputLabel htmlFor="age-native-simple">Batch</InputLabel>
-                                <BatchSelect value={1} /> */}
+                                <FormLabel>Email</FormLabel>
+                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
+                                <FormLabel>Contact No.</FormLabel>
+                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
+
                                 <Button variant="contained" type='submit' disbled color="primary"
                                     style={{ marginTop: '30px' }}>
                                     Add Student
                                 </Button>
+
                             </FormGroup>
                         </form>
                     </div>
