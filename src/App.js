@@ -10,6 +10,8 @@ import Profile from './components/profile/Profile';
 import Request from './components/attendenceRequests/Request';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import ManualAttendence from './components/manualAttendence/ManualAttendence';
+import Show from './components/show/Show';
+import ShowStaff from './components/show/ShowStaff';
 function App() {
   return (
     <BrowserRouter>
@@ -24,6 +26,8 @@ function App() {
           <Route exact path='/staffhome' component={Staff} />
           <Route exact path='/batchhome' component={Batch} />
           <Route exact path='/settings' component={Profile} />
+          <Route path="/show/:id" component={Show} />       {/* //show for student */}
+          <Route path="/showstaff/:id" component={ShowStaff} />
         </Switch>
       </div>
     </BrowserRouter>
