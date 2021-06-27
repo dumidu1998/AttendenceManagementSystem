@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import Navbar from '../layout/Navbar';
 import CardContainer from '../maindashboard/CardContainer';
 import { DataGrid } from '@material-ui/data-grid';
@@ -10,18 +10,12 @@ import InputLabel from '@material-ui/core/InputLabel';
 import BatchSelect from './BatchSelect';
 import { Button, FormGroup, FormLabel, OutlinedInput } from '@material-ui/core';
 import '../styles.css'
+import { db } from '../../firebase';
 
 const columns = [
     { field: 'id', headerName: 'Reg. No', width: 250 },
     { field: 'firstName', headerName: 'Name', width: 200 },
     { field: 'lastName', headerName: 'Batch', width: 200 },
-    { field: 'lastName', headerName: 'Batch', width: 200 },
-    {
-        field: 'age',
-        headerName: 'Age',
-        type: 'number',
-        width: 190,
-    }
 ];
 
 const rows = [
@@ -55,6 +49,69 @@ export default function Dashboard() {
     const [openstudent, setOpenstudent] = React.useState(false);
     const [openstaff, setOpenstaff] = React.useState(false);
 
+    const [srfid, setsrfid] = useState('');
+    const [sid, setsid] = useState('');
+    const [sname, setsname] = useState('');
+    const [saddress, setsaddress] = useState('');
+    const [semail, setsemail] = useState('');
+    const [scontact, setscontact] = useState('');
+    const [sdob, setsdob] = useState('');
+
+
+    const [batch, setbatch] = useState('');
+    const [frfid, setfrfid] = useState('');
+    const [fid, setfid] = useState('');
+    const [fname, setfname] = useState('');
+    const [faddress, setfaddress] = useState('');
+    const [femail, setfemail] = useState('');
+    const [fcontact, setfcontact] = useState('');
+    const [fdob, setfdob] = useState('');
+
+
+
+    const addStudent = (event) => {
+        event.preventDefault();
+        db.collection('students').add({
+            rfid: frfid,
+            stuid: fid,
+            name: fname,
+            address: faddress,
+            email: femail,
+            contact: fcontact,
+            dob: new Date(fdob)
+        })
+        handleClosestaff();
+        alert("Staff added Sucessfully");
+        setsrfid('')
+        setsid('')
+        setsname('')
+        setsaddress('')
+        setsemail('')
+        setscontact('')
+        setsdob('')
+    }
+
+    const addStaff = (event) => {
+        event.preventDefault();
+        db.collection('staff').add({
+            rfid: srfid,
+            staffid: sid,
+            name: sname,
+            address: saddress,
+            email: semail,
+            contact: scontact,
+            dob: new Date(sdob)
+        })
+        handleClosestudent();
+        alert("Student added Sucessfully");
+        setfrfid('')
+        setfid('')
+        setfname('')
+        setfaddress('')
+        setfemail('')
+        setfcontact('')
+        setfdob('')
+    }
     const handleOpenstaff = () => {
         setOpenstaff(true);
     };
@@ -106,24 +163,26 @@ export default function Dashboard() {
                     <div className={classes.paper}>
                         <h2 id="transition-modal-title">Add New Student</h2>
                         <p id="transition-modal-description">Place the RFID card on Reader</p>
-                        <form onSubmit={() => alert('submitted')}>
+                        <form
+                            onSubmit={addStudent}
+                        >
                             <FormGroup>
                                 <FormLabel>RFID No.</FormLabel>
-                                <OutlinedInput autoFocus type="tel" required style={{ height: '30px', marginBottom: '10px' }} />
+                                <OutlinedInput autoFocus type="tel" value={frfid} onChange={(e) => setfrfid(e.target.value)} required style={{ height: '30px', marginBottom: '10px' }} />
                                 <FormLabel>Student Reg. No</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
+                                <OutlinedInput type="text" value={fid} onChange={(e) => setfid(e.target.value)} required style={{ height: '30px', marginBottom: '10px' }} />
                                 <FormLabel>Full Name</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
+                                <OutlinedInput type="text" value={fname} onChange={(e) => setfname(e.target.value)} required style={{ height: '30px', marginBottom: '10px' }} />
                                 <FormLabel>Batch</FormLabel>
-                                <BatchSelect value={10} />
+                                <BatchSelect setvalue={setbatch} />
                                 <FormLabel>DOB</FormLabel>
-                                <OutlinedInput type="date" required style={{ height: '30px', marginBottom: '10px' }} />
+                                <OutlinedInput type="date" value={fdob} onChange={(e) => setfdob(e.target.value)} required style={{ height: '30px', marginBottom: '10px' }} />
                                 <FormLabel>Address</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
+                                <OutlinedInput type="text" value={faddress} onChange={(e) => setfaddress(e.target.value)} required style={{ height: '30px', marginBottom: '10px' }} />
                                 <FormLabel>Email</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
+                                <OutlinedInput type="text" value={femail} onChange={(e) => setfemail(e.target.value)} required style={{ height: '30px', marginBottom: '10px' }} />
                                 <FormLabel>Contact No.</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
+                                <OutlinedInput type="text" value={fcontact} onChange={(e) => setfcontact(e.target.value)} required style={{ height: '30px', marginBottom: '10px' }} />
 
                                 <Button variant="contained" type='submit' disbled color="primary"
                                     style={{ marginTop: '30px' }}>
@@ -149,24 +208,26 @@ export default function Dashboard() {
             >
                 <Fade in={openstaff}>
                     <div className={classes.paper}>
-                        <form onSubmit={() => alert('submitted')}>
+                        <form
+                            onSubmit={addStaff}
+                        >
                             <h2 id="transition-modal-title">Add New Staff Member</h2>
                             <p id="transition-modal-description">Place the RFID card on Reader</p>
                             <FormGroup>
                                 <FormLabel>RFID No.</FormLabel>
-                                <OutlinedInput autoFocus type="tel" required style={{ height: '30px', marginBottom: '10px' }} />
+                                <OutlinedInput autoFocus type="tel" value={srfid} onChange={(e) => setsrfid(e.target.value)} required style={{ height: '30px', marginBottom: '10px' }} />
                                 <FormLabel>Staff ID</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
+                                <OutlinedInput type="text" value={sid} onChange={(e) => setsid(e.target.value)} required style={{ height: '30px', marginBottom: '10px' }} />
                                 <FormLabel>Full Name</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
+                                <OutlinedInput type="text" value={sname} onChange={(e) => setsname(e.target.value)} required style={{ height: '30px', marginBottom: '10px' }} />
                                 <FormLabel>DOB</FormLabel>
-                                <OutlinedInput type="date" required style={{ height: '30px', marginBottom: '10px' }} />
+                                <OutlinedInput type="date" value={sdob} onChange={(e) => setsdob(e.target.value)} required style={{ height: '30px', marginBottom: '10px' }} />
                                 <FormLabel>Address</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
+                                <OutlinedInput type="text" value={saddress} onChange={(e) => setsaddress(e.target.value)} required style={{ height: '30px', marginBottom: '10px' }} />
                                 <FormLabel>Email</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
+                                <OutlinedInput type="text" value={semail} onChange={(e) => setsemail(e.target.value)} required style={{ height: '30px', marginBottom: '10px' }} />
                                 <FormLabel>Contact No.</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
+                                <OutlinedInput type="text" value={scontact} onChange={(e) => setscontact(e.target.value)} required style={{ height: '30px', marginBottom: '10px' }} />
 
                                 <Button variant="contained" type='submit' disbled color="primary"
                                     style={{ marginTop: '30px' }}>

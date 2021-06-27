@@ -1,22 +1,32 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Select from '@material-ui/core/Select';
 import NativeSelect from '@material-ui/core/NativeSelect';
+import { db } from '../../firebase';
 
 export default function BatchSelect(props) {
+
+
+    const [batches, setbatches] = useState([]);
+
+    useEffect(() => {
+        db.collection('batch').onSnapshot(snapshot => {
+            setbatches(snapshot.docs.map(doc => ({ name: doc.data().name })))
+        });
+
+    }, [])
+
     return (
         <div>
             <Select
                 native
-                value={props.value}
-                inputProps={{
-                    name: 'age',
-                    id: 'age-native-simple',
-                }}
+                // value={props.value}
+                onChange={(e) => props.setvalue(e.target.value)}
             >
-                <option aria-label="None" value="" />
-                <option value={10}>2018/19</option>
-                <option value={20}>2017/18</option>
-                <option value={30}>2018/12</option>
+                {
+                    batches.map(batch => (
+                        <option value={batch.name}>{batch.name}</option>
+                    ))
+                }
             </Select>
             <br />
             <br />
