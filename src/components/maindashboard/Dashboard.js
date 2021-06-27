@@ -78,17 +78,19 @@ export default function Dashboard() {
             address: faddress,
             email: femail,
             contact: fcontact,
-            dob: new Date(fdob)
+            dob: new Date(fdob),
+            batch: batch
         })
-        handleClosestaff();
-        alert("Staff added Sucessfully");
-        setsrfid('')
-        setsid('')
-        setsname('')
-        setsaddress('')
-        setsemail('')
-        setscontact('')
-        setsdob('')
+        handleClosestudent();
+        alert("Student added Sucessfully");
+        setfrfid('')
+        setfid('')
+        setfname('')
+        setfaddress('')
+        setfemail('')
+        setfcontact('')
+        setfdob('')
+        setbatch('')
     }
 
     const addStaff = (event) => {
@@ -102,15 +104,15 @@ export default function Dashboard() {
             contact: scontact,
             dob: new Date(sdob)
         })
-        handleClosestudent();
-        alert("Student added Sucessfully");
-        setfrfid('')
-        setfid('')
-        setfname('')
-        setfaddress('')
-        setfemail('')
-        setfcontact('')
-        setfdob('')
+        handleClosestaff();
+        alert("Staff added Sucessfully");
+        setsrfid('')
+        setsid('')
+        setsname('')
+        setsaddress('')
+        setsemail('')
+        setscontact('')
+        setsdob('')
     }
     const handleOpenstaff = () => {
         setOpenstaff(true);

@@ -19,7 +19,7 @@ export default function BatchSelect(props) {
         <div>
             <Select
                 native
-                // value={props.value}
+                value={props.value}
                 onChange={(e) => props.setvalue(e.target.value)}
             >
                 {

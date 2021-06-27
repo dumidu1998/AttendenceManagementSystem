@@ -1,38 +1,15 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../layout/Navbar';
 import { DataGrid } from '@material-ui/data-grid';
-import { Button, FormGroup, FormLabel, OutlinedInput } from '@material-ui/core';
+import { Button, FormGroup, FormLabel, IconButton, List, ListItem, ListItemSecondaryAction, ListItemText, OutlinedInput } from '@material-ui/core';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
 import { makeStyles } from '@material-ui/core/styles';
+import DeleteIcon from '@material-ui/icons/Delete';
 
 import '../styles.css'
-
-
-const columns = [
-    { field: 'id', headerName: 'Admin Id', width: 250 },
-    { field: 'firstName', headerName: 'Name', width: 200 },
-    { field: 'lastName', headerName: 'Batch', width: 200 },
-    {
-        field: 'age',
-        headerName: 'Age',
-        type: 'number',
-        width: 190,
-    }
-];
-
-const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: 'dumidu', age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
+import { db } from '../../firebase';
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -53,6 +30,7 @@ export default function Admin() {
 
     const [openstudent, setOpenstudent] = React.useState(false);
 
+    const [batchName, setbatchName] = useState('');
 
     const handleOpenstudent = () => {
         setOpenstudent(true);
@@ -62,16 +40,45 @@ export default function Admin() {
         setOpenstudent(false);
     };
 
+    const addbatch = (e) => {
+        e.preventDefault();
+        db.collection('batch').add({
+            name: batchName
+        })
+        handleClosestudent();
+        alert("New Batch Added")
+        setbatchName('');
+    }
+    const [batches, setbatches] = useState([]);
+
+    useEffect(() => {
+        db.collection('batch').onSnapshot(snapshot => {
+            setbatches(snapshot.docs.map(doc => ({ id: doc.id, name: doc.data().name })))
+        });
+
+    }, [])
+
     return (
         <div className="content">
-            <h1>batch List</h1>
+            <h1>Batch List</h1>
             <Navbar />
             <Button className="adminbtn" variant="contained" color="primary" onClick={handleOpenstudent} style={{ marginLeft: '150px', display: 'block', marginTop: '30px' }}>
                 Add new batch
             </Button>
-            <div style={{ height: 600, marginLeft: '110px', marginTop: '10px' }}>
-                <DataGrid rows={rows} columns={columns} pageSize={10} />
-            </div>
+            <List >
+                {batches.map(batch => (
+                    <ListItem className="listContent">
+                        <ListItemText
+                            primary={batch.name}
+                        />
+                        <ListItemSecondaryAction>
+                            <IconButton edge="start" aria-label="delete" onClick={event => db.collection('batch').doc(batch.id).delete()}>
+                                <DeleteIcon />
+                            </IconButton>
+                        </ListItemSecondaryAction>
+                    </ListItem>
+                ))}
+            </List>
 
             <Modal
                 aria-labelledby="transition-modal-title"
@@ -87,16 +94,15 @@ export default function Admin() {
             >
                 <Fade in={openstudent}>
                     <div className={classes.paper}>
-                        <form onSubmit={() => alert('submitted')} autocomplete="off" >
+                        <form onSubmit={addbatch} autocomplete="off" >
                             <h2 id="transition-modal-title">Add New Batch</h2>
                             <FormGroup>
                                 <FormLabel>Batch Name</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
-                                <FormLabel>Batch code</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
+                                <OutlinedInput type="text" autoFocus value={batchName} onChange={(e) => setbatchName(e.target.value)} required style={{ height: '30px', marginBottom: '10px' }} />
+
                                 <Button variant="contained" type='submit' disbled color="primary"
                                     style={{ marginTop: '30px' }}>
-                                    Add Student
+                                    Add Batch
                                 </Button>
                             </FormGroup>
                         </form>
