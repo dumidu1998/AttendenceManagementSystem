@@ -16,6 +16,7 @@ import CheckIcon from "@material-ui/icons/Check";
 import PersonIcon from "@material-ui/icons/Person";
 import GroupWorkIcon from '@material-ui/icons/GroupWork';
 import SettingsIcon from "@material-ui/icons/Settings";
+import LiveHelpIcon from '@material-ui/icons/LiveHelp';
 import { NavLink } from "react-router-dom";
 
 const drawerWidth = 240;
@@ -83,6 +84,14 @@ function Navbar() {
                                 <CheckIcon />
                             </ListItemIcon>
                             <ListItemText primary="Marking (Manual)" />
+                        </ListItem>
+                    </NavLink>
+                    <NavLink className={classes.links} to='/Requests'>
+                        <ListItem button key="Att. Requests" >
+                            <ListItemIcon>
+                                <LiveHelpIcon />
+                            </ListItemIcon>
+                            <ListItemText primary="Att. Requests" />
                         </ListItem>
                     </NavLink>
                     <NavLink className={classes.links} to='/adminhome'>

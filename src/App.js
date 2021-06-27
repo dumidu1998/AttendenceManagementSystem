@@ -7,6 +7,7 @@ import Student from './components/student/Student';
 import Staff from './components/staff/Staff';
 import Batch from './components/batch/Batch';
 import Profile from './components/profile/Profile';
+import Request from './components/attendenceRequests/Request';
 import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import ManualAttendence from './components/manualAttendence/ManualAttendence';
 function App() {
@@ -17,6 +18,7 @@ function App() {
           <Route exact path='/' component={Attendence} />
           <Route exact path='/dashboard' component={Dashboard} />
           <Route exact path='/manualmarking' component={ManualAttendence} />
+          <Route exact path='/Requests' component={Request} />
           <Route exact path='/adminhome' component={Admin} />
           <Route exact path='/studenthome' component={Student} />
           <Route exact path='/staffhome' component={Staff} />
