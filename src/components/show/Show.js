@@ -1,4 +1,4 @@
-import { makeStyles } from '@material-ui/core';
+import { IconButton, makeStyles } from '@material-ui/core';
 import React from 'react'
 import { useParams } from "react-router-dom";
 import Box from "@material-ui/core/Box";
@@ -6,6 +6,19 @@ import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import '../styles.css'
+import { DataGrid } from '@material-ui/data-grid';
+import ReactToPrint from 'react-to-print';
+import PrintIcon from '@material-ui/icons/Print';
+
+const columns = [
+    { field: 'id', headerName: 'Name', width: 200 },
+    { field: 'date', headerName: 'Date', width: 200 },
+    { field: 'time', headerName: 'Time', width: 200 },
+];
+
+const rows = [
+    { id: 1, date: '1111', time: '11111' }
+];
 
 const useStyles = makeStyles(theme => ({
     card: {
@@ -50,7 +63,11 @@ export default function Show() { //show for student
     let { id } = useParams();
     return (
         <div>
-            helloooo{id}
+            {/* {id} */}
+            <h1>Student Full View</h1>
+            <IconButton aria-label="Print" style={{ float: 'right' }} onClick={() => window.print()}>
+                <PrintIcon />
+            </IconButton>
             <Card className={classes.card}>
                 <Box boxShadow={3}>
                     <CardMedia
@@ -73,6 +90,9 @@ export default function Show() { //show for student
                     <h5 className="myh5">Contact No.:  Dumidu Kasun</h5>
                 </div>
             </Card>
-        </div>
+            <div style={{ height: '0px', marginLeft: '110px', marginTop: '10px' }}>
+                <DataGrid autoHeight rows={rows} columns={columns} pageSize={100} />
+            </div>
+        </div >
     )
 }

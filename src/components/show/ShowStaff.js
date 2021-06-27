@@ -6,6 +6,9 @@ import Card from "@material-ui/core/Card";
 import CardMedia from "@material-ui/core/CardMedia";
 import Typography from "@material-ui/core/Typography";
 import '../styles.css'
+import PrintIcon from '@material-ui/icons/Print';
+import IconButton from '@material-ui/core/IconButton';
+
 
 const useStyles = makeStyles(theme => ({
     card: {
@@ -51,6 +54,10 @@ export default function ShowStaff() {
     return (
         <div>
             helloooo{id}
+            <h1>Staff Full View</h1>
+            <IconButton aria-label="Print" onClick={() => window.print()}>
+                <PrintIcon />
+            </IconButton>
             <Card className={classes.card}>
                 <Box boxShadow={3}>
                     <CardMedia
