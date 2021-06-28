@@ -47,7 +47,7 @@ const useStyles = makeStyles((theme) => ({
     },
 }));
 
-export default function Admin() {
+export default function Student() {
     const classes = useStyles();
     const [openstudent, setOpenstudent] = React.useState(false);
     const [rows, setrows] = useState([]);
@@ -88,43 +88,6 @@ export default function Admin() {
             <div style={{ height: 600, marginLeft: '110px', marginTop: '10px' }}>
                 <DataGrid rows={rows} columns={columns} pageSize={100} onRowClick={viewmore} />
             </div>
-
-            <Modal
-                aria-labelledby="transition-modal-title"
-                aria-describedby="transition-modal-description"
-                className={classes.modal}
-                open={openstudent}
-                onClose={handleClosestudent}
-                closeAfterTransition
-                BackdropComponent={Backdrop}
-                BackdropProps={{
-                    timeout: 300,
-                }}
-            >
-                <Fade in={openstudent}>
-                    <div className={classes.paper}>
-                        <form onSubmit={() => alert('submitted')} autocomplete="off" >
-                            <h2 id="transition-modal-title">Add New Admin</h2>
-                            <FormGroup>
-                                <FormLabel>Full Name</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
-                                <FormLabel>Username</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
-                                <FormLabel>Email</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
-                                <FormLabel>Password</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
-                                <Button variant="contained" type='submit' disbled color="primary"
-                                    style={{ marginTop: '30px' }}>
-                                    Add Student
-                                </Button>
-                            </FormGroup>
-                        </form>
-                    </div>
-                </Fade>
-            </Modal>
-
-
         </div>
     )
 }

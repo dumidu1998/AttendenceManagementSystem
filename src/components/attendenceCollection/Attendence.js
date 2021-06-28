@@ -17,13 +17,13 @@ export default function Attendence() {
     const [d, setD] = useState(new Date().valueOf())
     const [msg, setmsg] = useState('')
     const [warn, setwarn] = useState('')
+    const [docid, setdocid] = useState('')
 
 
     useEffect(() => {
         const timeout = setTimeout(() => {
             setD(new Date().valueOf());
         }, 500);
-
         return () => clearTimeout(timeout);
     }, [d]);
 
@@ -53,6 +53,7 @@ export default function Attendence() {
         const queryRef1 = stdRef.where('rfid', '==', Id);
         const res1 = await queryRef1.get();
         res1.forEach(doc => {
+            setdocid(doc.id);
             setname(doc.data().name);
         })
 
@@ -68,6 +69,7 @@ export default function Attendence() {
         const queryRef2 = stfRef.where('rfid', '==', Id);
         const res2 = await queryRef2.get();
         res2.forEach(doc => {
+            setdocid(doc.id);
             setname(doc.data().name);
         })
         db.collection('staffAttendence').add({
@@ -90,8 +92,6 @@ export default function Attendence() {
             type = doc.data().type;
             type == "student" ? (markStudent(doc.data().id)) : (MarkStaff(doc.data().id));
         })
-
-
     }
 
     const requestatt = () => {
@@ -101,7 +101,8 @@ export default function Attendence() {
             id: mainId,
             date: new Date(),
             status: false,
-            type: type
+            type: type,
+            studentdocid: docid
         })
     }
 
@@ -121,7 +122,7 @@ export default function Attendence() {
     const probar = () => {
         i = setInterval(() => {
             setProgress((prevProgress) => (prevProgress <= 10 ? 0 : prevProgress - 10));
-        }, 200) //200
+        }, 220) //200
         if (progress == 0) {
             clearInterval(i);
         }
@@ -144,7 +145,6 @@ export default function Attendence() {
             </Grid>
             <img src="https://www.felca.org/wp-content/uploads/Logo-edex-pdf.jpg" width="130" />
             <h1 id="hh">Welcome to Edex Institute</h1>
-            {name}
             <div class="">
                 <div className={warn}>{msg}</div>
                 <form autoComplete="off" onSubmit={submitfunction}>

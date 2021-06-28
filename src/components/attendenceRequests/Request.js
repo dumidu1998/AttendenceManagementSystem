@@ -1,49 +1,49 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import Navbar from '../layout/Navbar'
 import { DataGrid } from '@material-ui/data-grid';
 import Deletebtn from '../tableButtons/Deletebtn';
-
 import '../styles.css'
-
-
+import { db } from '../../firebase';
+import { IconButton } from '@material-ui/core';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 const columns = [
-    { field: 'id', headerName: 'Admin Username', width: 250 },
-    { field: 'firstName', headerName: 'Admin Email', width: 200 },
-    { field: 'lastName', headerName: 'Full Name', width: 200 },
-    // {
-    //     field: 'age',
-    //     headerName: 'Age',
-    //     type: 'number',
-    //     width: 190,
-    // },
-    {
-        field: 'age',
-        headerName: 'Action',
-        width: 190,
-        renderCell: Deletebtn,
-        disbleClickEventBubbling: true
-    }
+    { field: 'stuid', headerName: 'Student Reg.No', width: 200 },
+    { field: 'date', headerName: 'Date', width: 300 },
+    { field: 'status', headerName: 'Status', width: 200 },
 ];
 
-const rows = [
-    { id: 1, lastName: 'aaaa', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: 'dumidu', age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
 export default function Request() {
+
+    const [rows, setrows] = useState([]);
+
+    useEffect(() => {
+        db.collection('requests').onSnapshot(snapshot => {
+            setrows(snapshot.docs.map(doc => ({ id: doc.data().studentdocid, stuid: doc.data().id, date: doc.data().date.toDate(), status: doc.data().status })))
+        });
+    }, [])
+
+    const viewmore = (params) => {
+        window.open('show/' + params.row.id, '_blank').focus();  //show for student
+    }
+
+    const deleteall = async () => {
+        if (window.confirm("Are you sure You want to delete?")) {
+            db.collection('requests').onSnapshot(snapshot => {
+                snapshot.docs.map(doci => db.collection('requests').doc(doci.id).delete())
+            })
+        }
+    }
+
     return (
         <div className="content">
             <h1>Attendence Requests</h1>
+            <IconButton aria-label="Print" style={{ float: 'right' }} onClick={deleteall}>
+                <DeleteForeverIcon />
+            </IconButton>
             <Navbar />
             <div style={{ height: 600, marginLeft: '110px', marginTop: '10px' }}>
-                <DataGrid rows={rows} columns={columns} pageSize={10} />
+                <DataGrid rows={rows} columns={columns} pageSize={10} onRowClick={viewmore} />
             </div>
         </div>
     )
