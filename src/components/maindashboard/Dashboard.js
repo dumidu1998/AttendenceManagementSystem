@@ -81,6 +81,11 @@ export default function Dashboard() {
             dob: new Date(fdob),
             batch: batch
         })
+        db.collection('rfids').add({
+            rfid: frfid,
+            type: 'student',
+            id: fid
+        })
         handleClosestudent();
         alert("Student added Sucessfully");
         setfrfid('')
@@ -103,6 +108,11 @@ export default function Dashboard() {
             email: semail,
             contact: scontact,
             dob: new Date(sdob)
+        })
+        db.collection('rfids').add({
+            rfid: srfid,
+            type: 'staff',
+            id: sid
         })
         handleClosestaff();
         alert("Staff added Sucessfully");

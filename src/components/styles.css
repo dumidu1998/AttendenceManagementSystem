@@ -45,5 +45,13 @@
 
 
 .red{
-    
+    color: red;
+    margin-top: -10px;
+    margin-bottom: -5px;
+}
+
+.green{
+    color:green;
+    margin-top: -10px;
+    margin-bottom: -5px;
 }
