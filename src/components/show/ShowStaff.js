@@ -1,5 +1,5 @@
 import { makeStyles } from '@material-ui/core';
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { useParams } from "react-router-dom";
 import Box from "@material-ui/core/Box";
 import Card from "@material-ui/core/Card";
@@ -8,7 +8,13 @@ import Typography from "@material-ui/core/Typography";
 import '../styles.css'
 import PrintIcon from '@material-ui/icons/Print';
 import IconButton from '@material-ui/core/IconButton';
+import { db } from '../../firebase';
+import { DataGrid } from '@material-ui/data-grid';
 
+const columns = [
+    { field: 'idd', headerName: 'Staff Id', width: 200 },
+    { field: 'date', headerName: 'Date', width: 500 },
+];
 
 const useStyles = makeStyles(theme => ({
     card: {
@@ -51,11 +57,49 @@ const useStyles = makeStyles(theme => ({
 export default function ShowStaff() {
     const classes = useStyles();
     let { id } = useParams();
+    const [details, setdetails] = useState({});
+    const [rows, setrows] = useState([]);
+    const [stid, setstid] = useState('')
+
+    async function checkID() {
+        const rfidsRef = db.collection('staff').doc(id);
+        const res = await rfidsRef.get();
+        if (res.empty) {
+            alert("User Not found!!");
+            return false;
+        }
+        console.log(res.data().rfid);
+        setdetails({
+            rfid: res.data().rfid,
+            regno: res.data().staffid,
+            name: res.data().name,
+            bday: res.data().dob.toDate().toDateString(),
+            address: res.data().address,
+            email: res.data().email,
+            contact: res.data().contact,
+        })
+        setstid(res.data().staffid);
+    }
+
+    const getdata = async () => {
+        db.collection('staffAttendence').where('id', '==', stid).onSnapshot(snapshot => {
+            setrows(snapshot.docs.map(doc => ({ id: doc.id, idd: doc.data().id, date: doc.data().date.toDate() })))
+        });
+        console.log(stid);
+    }
+    setTimeout(function () {
+        getdata();
+    }, 300);
+
+    useEffect(() => {
+        checkID();
+    }, []);
+
+
     return (
         <div>
-            helloooo{id}
             <h1>Staff Full View</h1>
-            <IconButton aria-label="Print" onClick={() => window.print()}>
+            <IconButton aria-label="Print" style={{ float: 'right' }} onClick={() => window.print()}>
                 <PrintIcon />
             </IconButton>
             <Card className={classes.card}>
@@ -70,16 +114,18 @@ export default function ShowStaff() {
                     <Typography component="h5" variant="h5">
                         User Details
                     </Typography>
-                    <h5 className="myh5">RFID No.:  Dumidu Kasun</h5>
-                    <h5 className="myh5">Reg No.:  Dumidu Kasun</h5>
-                    <h5 className="myh5">Name:  Dumidu Kasun</h5>
-                    <h5 className="myh5">Batch:  Dumidu Kasun</h5>
-                    <h5 className="myh5">Birth Day:  Dumidu Kasun</h5>
-                    <h5 className="myh5">Address:  Dumidu Kasun</h5>
-                    <h5 className="myh5">Email:  Dumidu Kasun</h5>
-                    <h5 className="myh5">Contact No.:  Dumidu Kasun</h5>
+                    <h5 className="myh5">RFID No.:  {details.rfid}</h5>
+                    <h5 className="myh5">Reg No.: {details.regno}</h5>
+                    <h5 className="myh5">Name:  {details.name}</h5>
+                    <h5 className="myh5">Birth Day:  {details.bday}</h5>
+                    <h5 className="myh5">Address:  {details.address}</h5>
+                    <h5 className="myh5">Email:  {details.email}</h5>
+                    <h5 className="myh5">Contact No.:  {details.contact}</h5>
                 </div>
             </Card>
+            <div style={{ height: '0px', marginLeft: '110px', marginTop: '10px' }}>
+                <DataGrid autoHeight rows={rows} columns={columns} pageSize={100} />
+            </div>
         </div>
     )
 }
