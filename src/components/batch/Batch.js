@@ -62,9 +62,11 @@ export default function Admin() {
         <div className="content">
             <h1>Batch List</h1>
             <Navbar />
+
             <Button className="adminbtn" variant="contained" color="primary" onClick={handleOpenstudent} style={{ marginLeft: '150px', display: 'block', marginTop: '30px' }}>
                 Add new batch
             </Button>
+
             <List >
                 {batches.map(batch => (
                     <ListItem className="listContent">

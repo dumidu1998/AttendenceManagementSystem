@@ -52,7 +52,6 @@ export default function Admin() {
     const classes = useStyles();
     const [openstudent, setOpenstudent] = React.useState(false);
 
-
     const handleOpenstudent = () => {
         setOpenstudent(true);
     };
