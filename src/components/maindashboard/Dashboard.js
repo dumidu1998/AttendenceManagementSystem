@@ -143,7 +143,7 @@ export default function Dashboard() {
         <div className="content">
             <h1>Dashboard</h1>
             <Navbar />
-            <CardContainer studentcount='100' staffcount='100' />
+            <CardContainer studentcount='5' staffcount='2' />
             <Button variant="contained" color="primary" onClick={handleOpenstudent} style={{ marginRight: '150px', marginTop: '30px' }}>
                 Add Student
             </Button>
