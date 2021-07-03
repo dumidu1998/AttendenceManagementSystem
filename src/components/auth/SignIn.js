@@ -1,83 +1,52 @@
-import React, { Component } from 'react';
-import axios from 'axios';
-import { Redirect } from "react-router-dom";
+import React, { Component, useState } from 'react';
+import TextField from '@material-ui/core/TextField';
+import { Button } from '@material-ui/core';
+import { db } from '../../firebase';
+export default function SignIn() {
 
-class SignIn extends Component {
-    constructor(props) {
-        super(props);
-        this.state = {
-            email: '',
-            password: '',
-            redirectToHome: true
-        }
-    }
+    const [username, setusername] = useState('');
+    const [password, setpassword] = useState('');
 
-    componentDidMount() {
-
-    }
-
-    handleChange = (e) => {
-        this.setState({
-            [e.target.id]: e.target.value
-        })
-    }
-
-    handleSubmitSignIn = (e) => {
+    const submitfunction = async (e) => {
         e.preventDefault();
-        console.log(this.state);
-
-        const login = {
-            email: this.state.email,
-            password: this.state.password
+        const rfidsRef = db.collection('admins');
+        const queryRef = rfidsRef.where('username', '==', username);
+        const res = await queryRef.get();
+        if (res.empty) {
+            alert("Invalid Login details!!");
+            return false;
+        } else {
+            const query2Ref = rfidsRef.where('password', '==', password);
+            const res2 = await query2Ref.get();
+            if (res2.empty) {
+                alert("Invalid Login details!!");
+                return false;
+            }
+            sessionStorage.setItem('username', username);
+            window.location.href = "dashboard";
         }
-        const that = this;
-        axios.post("http://localhost:8080/authenticate", login)
-            .then(function (res) {
-                const data = res.data;
-                console.log(data)
-                localStorage.setItem("token", data.jwtToken);
-                localStorage.setItem("email", that.state.email);
-                localStorage.setItem("firstName", (data.firstName));
-                that.setState({
-                    redirectToHome: true
-                })
-                console.log(localStorage);
-            }).catch(function (error) {
-                const res = error.response;
-                if (res.status === 401) {
-                    alert("Invalid Email or Password. Please Try Again");
-                    console.log(error.response);
-                } else {
-                    alert("Server Error!");
-                }
-            })
     }
 
-    render() {
-        return (
-            <div class="login">
-                {
-                    this.state.redirectToHome ? (
-                        <Redirect to="/dashboard" />
-                    ) : ("")
-                }
-                <h2 class="active"> sign in </h2>
-                <form onSubmit={this.handleSubmitSignIn}>
-                    <input id="email" type="email" class="text" name="email" onChange={this.handleChange} />
-                    <span>Email</span>
-                    <br />
-                    <br />
-                    <input id="password" type="password" class="text" name="password" onChange={this.handleChange} />
-                    <span>password</span>
-                    <br />
-                    <button class="signin">
-                        Sign In
-                    </button>
-                    <hr></hr>
-                </form>
-            </div>
-        );
-    }
+    return (
+        <div class="">
+            <form autoComplete="off" onSubmit={submitfunction} >
+                <h2>Login </h2>
+                <TextField autoFocus type="text" id="outlined-basic" label="Admin Username" required variant="outlined"
+                    value={username}
+                    onChange={(e) => setusername(e.target.value)}
+                />
+                <br />
+                <br />
+                <br />
+                <TextField autoFocus autoComplete="off" type="password" id="outlined-basic" label="Password" required variant="outlined"
+                    value={password}
+                    onChange={(e) => setpassword(e.target.value)}
+                />
+                <br /><br />
+                <Button type="submit" variant="outlined" color="primary">
+                    Login
+                </Button>
+            </form >
+        </div >
+    );
 }
-
-export default SignIn;

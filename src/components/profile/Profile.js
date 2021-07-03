@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import Navbar from '../layout/Navbar';
 import { makeStyles, useTheme } from "@material-ui/core/styles";
 import Box from "@material-ui/core/Box";
@@ -10,6 +10,7 @@ import { Button, FormGroup, FormLabel, OutlinedInput } from '@material-ui/core';
 import Modal from '@material-ui/core/Modal';
 import Backdrop from '@material-ui/core/Backdrop';
 import Fade from '@material-ui/core/Fade';
+import { db } from '../../firebase';
 
 const useStyles = makeStyles(theme => ({
     card: {
@@ -56,9 +57,55 @@ export default function Admin() {
         setOpenstudent(true);
     };
 
+    const [username, setusername] = useState('');
+    const [email, setemail] = useState('');
+    const [fullname, setfullname] = useState('');
+    const [cpwd, setcpwd] = useState('');
+    const [newpwd, setnewpwd] = useState('');
+    const [cnewpwd, setcnewpwd] = useState('');
+    const [docid, setdocid] = useState('');
+    const [mypwd, setmypwd] = useState('');
+
     const handleClosestudent = () => {
         setOpenstudent(false);
     };
+    async function getdetails() {
+        const username = sessionStorage.getItem("username");
+        const rfidsRef = db.collection('admins');
+        const queryRef = rfidsRef.where('username', '==', username);
+        const res = await queryRef.get();
+        console.log(res);
+        if (res.empty) {
+            alert("Invalid Login details!!");
+            return false;
+        } else {
+            res.forEach(doc => {
+                setdocid(doc.id);
+                setemail(doc.data().email);
+                setfullname(doc.data().name);
+                setusername(doc.data().username);
+                setmypwd(doc.data().password);
+            })
+        }
+    }
+
+    function changepwd(e) {
+        e.preventDefault();
+        if (cpwd != mypwd || newpwd != cnewpwd) {
+            alert("Password Not matching!!");
+            return false;
+        }
+        db.collection('admins').doc(docid).set({
+            password: cnewpwd
+        }, { merge: true });
+        alert("password Updated Sucessfully!");
+        handleClosestudent();
+        setcpwd('');
+        setnewpwd('');
+        setcnewpwd('');
+    }
+
+    getdetails();
 
     return (
         <div className="content">
@@ -76,12 +123,14 @@ export default function Admin() {
                     <Typography component="h5" variant="h5">
                         User Details
                     </Typography>
-                    <h3>Name:  Dumidu Kasun</h3>
-                    <h3>Name:  Dumidu Kasun</h3>
-                    <h3>Name:  Dumidu Kasun</h3>
-                    <h3>Name:  Dumidu Kasun</h3>
+                    <h3>Username:  {username}</h3>
+                    <h3>Full Name:  {fullname}</h3>
+                    <h3>Email:  {email}</h3>
                 </div>
             </Card>
+            <Button className="adminbtn" variant="contained" color="primary" onClick={() => { sessionStorage.clear(); window.location.href = "login"; }} style={{ marginRight: '150px', float: 'right', display: 'block', marginTop: '30px' }}>
+                Log out
+            </Button>
             <Button className="adminbtn" variant="contained" color="primary" onClick={handleOpenstudent} style={{ marginRight: '150px', float: 'right', display: 'block', marginTop: '30px' }}>
                 Reset Password
             </Button>
@@ -101,17 +150,18 @@ export default function Admin() {
             >
                 <Fade in={openstudent}>
                     <div className={classes.paper}>
-                        <form onSubmit={() => alert('submitted')} autocomplete="off" >
-                            <h2 id="transition-modal-title">Add New Admin</h2>
+                        <form onSubmit={changepwd} autocomplete="off" >
+                            <h2 id="transition-modal-title">Reset Password</h2>
                             <FormGroup>
-                                <FormLabel>Full Name</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
-                                <FormLabel>Username</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
-                                <FormLabel>Email</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
-                                <FormLabel>Password</FormLabel>
-                                <OutlinedInput type="text" required style={{ height: '30px', marginBottom: '10px' }} />
+                                <FormLabel>Current Password</FormLabel>
+                                <OutlinedInput type="password" required value={cpwd} style={{ height: '30px', marginBottom: '10px' }}
+                                    onChange={(e) => setcpwd(e.target.value)} />
+                                <FormLabel>New Password</FormLabel>
+                                <OutlinedInput type="password" value={newpwd} required style={{ height: '30px', marginBottom: '10px' }}
+                                    onChange={(e) => setnewpwd(e.target.value)} />
+                                <FormLabel>Confirm New Password</FormLabel>
+                                <OutlinedInput type="password" value={cnewpwd} required style={{ height: '30px', marginBottom: '10px' }}
+                                    onChange={(e) => setcnewpwd(e.target.value)} />
                                 <Button variant="contained" type='submit' disbled color="primary"
                                     style={{ marginTop: '30px' }}>
                                     Add Student

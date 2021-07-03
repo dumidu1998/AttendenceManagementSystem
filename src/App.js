@@ -12,6 +12,7 @@ import { BrowserRouter, Route, Switch } from 'react-router-dom'
 import ManualAttendence from './components/manualAttendence/ManualAttendence';
 import Show from './components/show/Show';
 import ShowStaff from './components/show/ShowStaff';
+import SignIn from './components/auth/SignIn';
 function App() {
   return (
     <BrowserRouter>
@@ -19,7 +20,7 @@ function App() {
         <Switch>
           <Route exact path='/' component={Attendence} />
           <Route exact path='/dashboard' component={Dashboard} />
-          {/* <Route exact path='/login' component={Dashboard} /> //TODO login*/}
+          <Route exact path='/login' component={SignIn} />
           <Route exact path='/manualmarking' component={ManualAttendence} />
           <Route exact path='/Requests' component={Request} />
           <Route exact path='/adminhome' component={Admin} />

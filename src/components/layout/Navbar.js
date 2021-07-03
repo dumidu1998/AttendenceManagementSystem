@@ -52,6 +52,11 @@ const useStyles = makeStyles((theme) => ({
 
 function Navbar() {
 
+    if (sessionStorage.getItem("username")) {
+    } else {
+        window.location.href = "login";
+    }
+
     const classes = useStyles();
     return (
         <div className={classes.root}>
