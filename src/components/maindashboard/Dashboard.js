@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Navbar from '../layout/Navbar';
 import CardContainer from '../maindashboard/CardContainer';
 import { DataGrid } from '@material-ui/data-grid';
@@ -138,6 +138,27 @@ export default function Dashboard() {
     const handleClosestudent = () => {
         setOpenstudent(false);
     };
+
+    const [today, settoday] = useState([]);
+    const [dataa, setdataa] = useState('');
+
+    const startOfDay = new Date();
+    startOfDay.setHours(0, 0, 0, 0);
+
+    useEffect(() => {
+        db.collection('studentAttendence').where('date', '>=', startOfDay).onSnapshot(snapshot => {
+            settoday(snapshot.docs.map(doc => ({ id: doc.id, stid: doc.data().id })));
+        });
+    }, [])
+
+    useEffect(() => {
+        today.forEach(async id => {
+            const data = db.collection('students').where('stuid', '==', id.stid);
+            const newdata = await data.get();
+            setdataa(newdata.data());
+        })
+    }, [])
+    //TODO get list 
 
     return (
         <div className="content">
