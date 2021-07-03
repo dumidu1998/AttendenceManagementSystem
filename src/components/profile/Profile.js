@@ -69,6 +69,7 @@ export default function Admin() {
     const handleClosestudent = () => {
         setOpenstudent(false);
     };
+
     async function getdetails() {
         const username = sessionStorage.getItem("username");
         const rfidsRef = db.collection('admins');
@@ -76,7 +77,7 @@ export default function Admin() {
         const res = await queryRef.get();
         console.log(res);
         if (res.empty) {
-            alert("Invalid Login details!!");
+            window.location.href = "login";
             return false;
         } else {
             res.forEach(doc => {
