@@ -175,7 +175,7 @@ export default function Dashboard() {
 
     // show();
     getall();
-    console.log(all);
+    // console.log(all);
     var timer = setTimeout(() => {
         var neww = [];
         for (const out in all) {
