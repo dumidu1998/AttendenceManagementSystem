@@ -207,12 +207,22 @@ export default function Dashboard() {
 
         }
     }
+    const [sizet, setsizet] = useState(0);
+    const [sizes, setsizes] = useState(0);
+
+    db.collection('studentAttendence').where('date', '>=', startOfDay).get().then(snap => {
+        setsizes(snap.size);
+    });
+
+    db.collection('staffAttendence').where('date', '>=', startOfDay).get().then(snap => {
+        setsizet(snap.size);
+    });
 
     return (
         <div className="content">
             <h1>Dashboard</h1>
             <Navbar />
-            <CardContainer studentcount='5' staffcount='2' />
+            <CardContainer studentcount={sizes} staffcount={sizet} />
             <Button variant="contained" color="primary" onClick={handleOpenstudent} style={{ marginRight: '150px', marginTop: '30px' }}>
                 Add Student
             </Button>
