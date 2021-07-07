@@ -13,22 +13,12 @@ import '../styles.css'
 import { db } from '../../firebase';
 
 const columns = [
-    { field: 'id', headerName: 'Reg. No', width: 250 },
-    { field: 'firstName', headerName: 'Name', width: 200 },
-    { field: 'lastName', headerName: 'Batch', width: 200 },
+    { field: 'stuid', headerName: 'Reg. No', width: 250 },
+    { field: 'name', headerName: 'Name', width: 500 },
+    { field: 'batch', headerName: 'Batch', width: 200 },
 ];
 
-const rows = [
-    { id: 1, lastName: 'Snow', firstName: 'Jon', age: 35 },
-    { id: 2, lastName: 'Lannister', firstName: 'Cersei', age: 42 },
-    { id: 3, lastName: 'Lannister', firstName: 'Jaime', age: 45 },
-    { id: 4, lastName: 'Stark', firstName: 'Arya', age: 16 },
-    { id: 5, lastName: 'Targaryen', firstName: 'Daenerys', age: null },
-    { id: 6, lastName: 'Melisandre', firstName: 'dumidu', age: 150 },
-    { id: 7, lastName: 'Clifford', firstName: 'Ferrara', age: 44 },
-    { id: 8, lastName: 'Frances', firstName: 'Rossini', age: 36 },
-    { id: 9, lastName: 'Roxie', firstName: 'Harvey', age: 65 },
-];
+const rows = [];
 
 const useStyles = makeStyles((theme) => ({
     modal: {
@@ -140,10 +130,42 @@ export default function Dashboard() {
     };
 
     const [today, settoday] = useState([]);
-    const [dataa, setdataa] = useState('');
+    const [dataa, setdataa] = useState([]);
 
     const startOfDay = new Date();
     startOfDay.setHours(0, 0, 0, 0);
+
+    const all = [
+        //     {
+        //     id: 1,
+        //     name: "dumidu",
+        //     batch: "2018/2019",
+        //     stuid: "18020123"
+        // }
+    ];
+    let rowss = [];
+
+
+    async function show() {
+        today.forEach(async id => {
+            const data = db.collection('students').where('stuid', '==', id.stid);
+            const out = await data.get();
+            setTimeout(() => {
+                out.docs.map(doc => {
+                    all.push(
+                        {
+                            id: doc.id,
+                            name: doc.data().name,
+                            stuid: doc.data().stuid,
+                            batch: doc.data().batch,
+                        }
+                    );
+                })
+            }, 5000);
+        })
+    }
+
+    let editable = [];
 
     useEffect(() => {
         db.collection('studentAttendence').where('date', '>=', startOfDay).onSnapshot(snapshot => {
@@ -151,14 +173,40 @@ export default function Dashboard() {
         });
     }, [])
 
-    useEffect(() => {
-        today.forEach(async id => {
+    // show();
+    getall();
+    console.log(all);
+    var timer = setTimeout(() => {
+        var neww = [];
+        for (const out in all) {
+            // console.log(all[out]);
+            neww.push(all[out]);
+        }
+        setdataa(neww);
+    }, 1500)
+
+    setTimeout(() => {
+        clearTimeout(timer);
+    }, 3000)
+
+
+    async function getall() {
+        for (const id of today) {
             const data = db.collection('students').where('stuid', '==', id.stid);
-            const newdata = await data.get();
-            setdataa(newdata.data());
-        })
-    }, [])
-    //TODO get list 
+            const out = await data.get();
+            out.docs.map(doc => {
+                all.push(
+                    {
+                        id: doc.id,
+                        name: doc.data().name,
+                        stuid: doc.data().stuid,
+                        batch: doc.data().batch,
+                    }
+                );
+            })
+
+        }
+    }
 
     return (
         <div className="content">
@@ -175,9 +223,11 @@ export default function Dashboard() {
             <br />
             <br />
             <h2>Today Attendence</h2>
+
             <div style={{ height: 600, marginLeft: '110px', marginTop: '10px' }}>
-                <DataGrid rows={rows} columns={columns} pageSize={10} />
+                <DataGrid rows={dataa} columns={columns} pageSize={10} />
             </div>
+
 
 
             <Modal
@@ -217,7 +267,7 @@ export default function Dashboard() {
                                 <FormLabel>Contact No.</FormLabel>
                                 <OutlinedInput type="text" value={fcontact} onChange={(e) => setfcontact(e.target.value)} required style={{ height: '30px', marginBottom: '10px' }} />
 
-                                <Button variant="contained" type='submit' disbled color="primary"
+                                <Button variant="contained" type='submit' color="primary"
                                     style={{ marginTop: '30px' }}>
                                     Add Student
                                 </Button>
@@ -262,7 +312,7 @@ export default function Dashboard() {
                                 <FormLabel>Contact No.</FormLabel>
                                 <OutlinedInput type="text" value={scontact} onChange={(e) => setscontact(e.target.value)} required style={{ height: '30px', marginBottom: '10px' }} />
 
-                                <Button variant="contained" type='submit' disbled color="primary"
+                                <Button variant="contained" type='submit' color="primary"
                                     style={{ marginTop: '30px' }}>
                                     Add Student
                                 </Button>
